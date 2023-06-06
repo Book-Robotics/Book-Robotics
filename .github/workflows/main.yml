@@ -4,9 +4,9 @@ jobs:
   build: 
    runs-on: ubuntu-latest 
    steps: 
-   - uses: actions/checkout@v1 
+   - uses: actions/checkout@v2
    - name: Run make4ht 
-     uses: docker://ghcr.io/michal-h21/make4ht-action:latest 
+     uses: dante-ev/latex-action@latest 
      env: 
        command: "make4ht -u -d out main.tex" 
    - name: Publish the web pages 
