@@ -1,16 +1,26 @@
-name: CI 
-on: [push] 
-jobs: 
-  build: 
-   runs-on: ubuntu-latest 
-   steps: 
-   - uses: actions/checkout@v2
-   - name: Run make4ht 
-     uses: dante-ev/latex-action@latest 
-     env: 
-       command: "make4ht -u -d out main.tex" 
-   - name: Publish the web pages 
-     uses:  peaceiris/actions-gh-pages@v3 
-     with: 
-       github_token: ${{ secrets.GITHUB_TOKEN }} 
-       publish_dir: ./out
+name: Build LaTeX document
+on: [push]
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+      - name: pdflatex main
+        uses: dante-ev/latex-action@latest
+        with:
+          root_file: main.tex
+          compiler: pdflatex
+          args: -interaction=nonstopmode -shell-escape
+      - name: bibtex main
+        uses: dante-ev/latex-action@latest
+        with:
+          root_file: main.aux
+          compiler: bibtex
+          args: 
+      - name: pdflatex main
+        uses: dante-ev/latex-action@latest
+        with:
+          root_file: main.tex
+          compiler: pdflatex
+          args: -interaction=nonstopmode -shell-escape
