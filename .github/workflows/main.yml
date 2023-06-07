@@ -1,5 +1,7 @@
 name: Build LaTeX document to HTML
 on: [push]
+permissions:
+  contents: write
 jobs:
   build_latex:
     runs-on: ubuntu-latest
@@ -10,9 +12,8 @@ jobs:
         uses: xu-cheng/texlive-action/full@v1
         with:
           run: |
-            make4ht -u main.tex
-      - name: Upload HTML file
-        uses: actions/upload-artifact@v3
+            make4ht -u -d out main.tex
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          name: HTML
-          path: main.html
+          folder: out # The folder the action should deploy.
