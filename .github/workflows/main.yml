@@ -7,13 +7,14 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v3
       - name: Compile LaTeX document
-      - uses: xu-cheng/texlive-action/small@v1
+        uses: xu-cheng/texlive-action/small@v1
         with:
           run: |
-            pdflatex main
-            bibtex main
-            pdflatex main
-            pdflatex main
+            pdflatex  -file-line-error -halt-on-error -interaction=nonstopmode -recorder  "main.tex"
+            bibtex  "main.aux"
+            pdflatex  -file-line-error -halt-on-error -interaction=nonstopmode -recorder  "main.tex"
+            bibtex  "main.aux"
+            pdflatex  -file-line-error -halt-on-error -interaction=nonstopmode -recorder  "main.tex"
       - name: Upload PDF file
         uses: actions/upload-artifact@v3
         with:
