@@ -1,4 +1,4 @@
-name: Build LaTeX document
+name: Build LaTeX document to HTML
 on: [push]
 jobs:
   build_latex:
@@ -10,13 +10,9 @@ jobs:
         uses: xu-cheng/texlive-action/small@v1
         with:
           run: |
-            pdflatex  -file-line-error -halt-on-error -interaction=nonstopmode -recorder  "main.tex"
-            bibtex  "main.aux"
-            pdflatex  -file-line-error -halt-on-error -interaction=nonstopmode -recorder  "main.tex"
-            bibtex  "main.aux"
-            pdflatex  -file-line-error -halt-on-error -interaction=nonstopmode -recorder  "main.tex"
-      - name: Upload PDF file
+            make4ht -u -d out main.tex
+      - name: Upload HTML file
         uses: actions/upload-artifact@v3
         with:
-          name: PDF
-          path: main.pdf
+          name: HTML
+          path: main.html
