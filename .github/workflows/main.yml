@@ -7,10 +7,9 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v3
       - name: Compile LaTeX document
-        uses: xu-cheng/texlive-action/small@v1
+        uses: xu-cheng/texlive-action/full@v1
         with:
           run: |
-            apk add make4ht
             make4ht -u main.tex
       - name: Upload HTML file
         uses: actions/upload-artifact@v3
