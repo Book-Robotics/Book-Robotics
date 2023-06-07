@@ -10,7 +10,8 @@ jobs:
         uses: xu-cheng/texlive-action/small@v1
         with:
           run: |
-            make4ht -u -d out main.tex
+            apk add make4ht
+            make4ht -u main.tex
       - name: Upload HTML file
         uses: actions/upload-artifact@v3
         with:
